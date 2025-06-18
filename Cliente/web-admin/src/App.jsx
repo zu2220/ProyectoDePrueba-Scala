@@ -1,31 +1,28 @@
-import { useState, useEffect } from 'react'
-import { getProducts } from './api/products'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import DashboardPage from './pages/DashboardPage'
+import UsersPage from './pages/UsersPage'
+import OrdersPage from './pages/OrdersPage'
+import ProductsPage from './pages/ProductsPage'
+import CustomersPage from './pages/CustomersPage'
+import SuppliersPage from './pages/SuppliersPage'
+import SuppliesPage from './pages/SuppliesPage'
+
 
 function App() {
-  const [products, setProducts] = useState([])
-  
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await getProducts()
-        setProducts(response.data)
-      } catch (error) {
-        console.error('Error fetching products:', error)
-      }
-    }
-    fetchProducts()
-    }, [])
+
   return (
-    <>
-      <h1>Products</h1>
-      <ul>
-        {products.map((product, i) => (
-          <li key={i + 1}>
-            {product.name} - ${product.price}
-          </li>
-        ))}
-      </ul>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/usuarios" element={<UsersPage/>} />
+        <Route path="/ordenes" element={<OrdersPage/>} />
+        <Route path="/productos" element={<ProductsPage/>} />
+        <Route path="/clientes" element={<CustomersPage/>} />
+        <Route path="/proveedores" element={<SuppliersPage/>} />
+        <Route path="/insumos" element={<SuppliesPage/>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
