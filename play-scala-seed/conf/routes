@@ -11,6 +11,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 # Rutas para los usuarios
 GET     /api/users        controllers.UserController.getUsers
++nocsrf
 POST    /api/users        controllers.UserController.createUser
 
 # Rutas para los proveedores
@@ -19,6 +20,7 @@ POST    /api/suppliers        controllers.SupplierController.createSupplier
 
 # Rutas para los productos
 GET     /api/products        controllers.ProductController.getProducts
++nocsrf
 POST    /api/products        controllers.ProductController.createProduct
 
 # Rutas para los pedidos

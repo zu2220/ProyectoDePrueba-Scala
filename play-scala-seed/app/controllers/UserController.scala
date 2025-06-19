@@ -22,7 +22,7 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
         User(
           doc.getString("nombre"),
           doc.getString("apellido"),
-          doc.getDate("fecha_nacimiento"),
+          doc.getString("nacimiento"),
           doc.getString("correo"),
           doc.getString("contrasena"),
           doc.getString("celular"),
@@ -40,7 +40,7 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
         val doc = Document(
           "nombre" -> user.nombre,
            "apellido" -> user.apellido,
-           "fecha_nacimiento" -> user.fecha_nacimiento,
+           "nacimiento" -> user.nacimiento,
            "correo" -> user.correo,
            "contrasena" -> user.contrasena,
            "celular" -> user.celular,

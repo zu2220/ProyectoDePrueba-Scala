@@ -72,7 +72,6 @@ const FormularioRegistroUsuarios = ({ agregarUsuario }) => {
         <Grid item xs={12}>
           <TextField
             label="Contraseña"
-            type="text"
             variant="outlined"
             fullWidth
             value={contrasena}
@@ -83,7 +82,6 @@ const FormularioRegistroUsuarios = ({ agregarUsuario }) => {
         <Grid item xs={12}>
           <TextField
             label="Número de Celular"
-            type="tel"
             variant="outlined"
             fullWidth
             value={celular}

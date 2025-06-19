@@ -12,7 +12,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 
 const drawerWidth = 200;
 
-const Sidebar = () => {
+const SideBar = () => {
   const navigate = useNavigate();
 
   return (
@@ -50,4 +50,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

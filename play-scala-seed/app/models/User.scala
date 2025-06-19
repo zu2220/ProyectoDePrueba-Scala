@@ -6,7 +6,7 @@ import java.util.Date
 case class User(
   nombre: String,
   apellido: String,
-  fecha_nacimiento: Date,
+  nacimiento: String,
   correo: String,
   contrasena: String,
   celular: String,

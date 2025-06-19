@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 
-export default function Tablausers({users}) {
+export default function TablaProductos({products}) {
 
   return (
     <div style={{ marginLeft: '220px', padding: '20px' }}>
@@ -16,30 +16,26 @@ export default function Tablausers({users}) {
       <Table sx={{ minWidth: 450 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell >Nombre</TableCell>
-            <TableCell align="right">Apellido</TableCell>
-            <TableCell align="right">Fecha de nacimiento</TableCell>
-            <TableCell align="right">Correo</TableCell>
-            <TableCell align="right">Contraseña</TableCell>
-            <TableCell align="right">Celular</TableCell>
-            <TableCell align="right">Rol</TableCell>
+            <TableCell >Producto</TableCell>
+            <TableCell align="right">Precio</TableCell>
+            <TableCell align="right">Stock</TableCell>
+            <TableCell align="right">Calificacion</TableCell>
+            <TableCell align="right">Categoría</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {products.map((product) => (
             <TableRow
-              key={user.nombre}
+              key={product.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {user.nombre}
+                {product.name}
               </TableCell>
-              <TableCell align='right'>{user.apellido}</TableCell>
-              <TableCell align="right">{user.nacimiento}</TableCell>
-              <TableCell align="right">{user.correo}</TableCell>
-              <TableCell align="right">{user.contrasena}</TableCell>
-              <TableCell align="right">{user.celular}</TableCell>
-              <TableCell align="right">{user.rol}</TableCell>
+              <TableCell align='right'>{product.price}</TableCell>
+              <TableCell align='right'>{product.stock}</TableCell>
+              <TableCell align="right">{product.rate}</TableCell>
+              <TableCell align="right">{product.category}</TableCell>
             </TableRow>
           ))}
         </TableBody>
