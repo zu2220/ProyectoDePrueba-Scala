@@ -1,0 +1,49 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index()
+
+# Map static resources from the /public folder to the /assets URL path
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# Rutas para los usuarios
+GET     /api/users        controllers.UserController.getUsers
++nocsrf
+POST    /api/users        controllers.UserController.createUser
+
+# Rutas para los proveedores
+GET     /api/suppliers        controllers.SupplierController.getSupplier
++nocsrf
+POST    /api/suppliers        controllers.SupplierController.createSupplier
+
+# Rutas para los productos
+GET     /api/products        controllers.ProductController.getProducts
++nocsrf
+POST    /api/products        controllers.ProductController.createProduct
+
+# Rutas para los pedidos
+GET     /api/orders        controllers.OrderController.getOrders
++nocsrf
+POST    /api/orders        controllers.OrderController.createOrder
+
+# Rutas para los clientes
+GET     /api/clients        controllers.ClientController.getClients
++nocsrf
+POST    /api/clients        controllers.ClientController.createClient
+
+# Ruta de los insumos
+GET     /api/supplies               controllers.SupplyController.getSupplies
++nocsrf
+POST    /api/supplies               controllers.SupplyController.createSupply
