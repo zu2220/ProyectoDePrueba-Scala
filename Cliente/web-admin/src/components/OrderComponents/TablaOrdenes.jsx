@@ -50,6 +50,7 @@ export default function TablaOrdenes({ orders }) {
               <StyledTableCell align="left">Estado</StyledTableCell>
               <StyledTableCell align="left">Método de Pago</StyledTableCell>
               <StyledTableCell align="left">Notas</StyledTableCell>
+              <StyledTableCell align="left">Acciones</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
