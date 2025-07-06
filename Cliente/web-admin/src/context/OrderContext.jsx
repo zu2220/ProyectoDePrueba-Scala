@@ -1,7 +1,9 @@
 // src/context/OrderContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { getOrders, createOrder } from '../api/orders.js'; 
+import { getOrders, createOrder, updateOrder, deleteOrder } from '../api/orders.js'; 
 
+// Se define el contexto para las órdenes
+// Este contexto se utilizará para compartir el estado de las órdenes en toda la aplicación
 const OrderContext = createContext();
 
 export const useOrders = () => {
@@ -25,6 +27,9 @@ export const OrderProvider = ({ children }) => {
       
       const processedData = data.map(order => {
         let dateString = order.order_date;
+
+        // Nos aseguramos de que total_amount sea un número
+        // Si no es un número, lo convertimos a 0
         const totalAmount = parseFloat(order.total_amount) || 0;
 
         if (typeof order.order_date === 'number') {
@@ -60,6 +65,32 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
+  const updateOrder = async (updatedOrder)=>{
+    setError(null);
+    try {
+      await updateOrder(updatedOrder._id, updatedOrder);
+      await fetchOrders(); 
+      return true;
+    } catch (err) {
+      console.error("Error al actualizar orden en el contexto:", err);
+      setError(err);
+      return false;
+    }
+  }
+
+  const deleteOrder = async (id) => {
+    setError(null);
+    try {
+      await deleteOrder(id);
+      await fetchOrders(); 
+      return true;
+    } catch (err) {
+      console.error("Error al eliminar orden en el contexto:", err);
+      setError(err);
+      return false;
+    }
+  }
+
   const clearOrders = () => {
     setOrders([]); 
   };
@@ -74,6 +105,8 @@ export const OrderProvider = ({ children }) => {
     error,
     fetchOrders,
     addOrder,
+    updateOrder,
+    deleteOrder,
     clearOrders, 
   };
 

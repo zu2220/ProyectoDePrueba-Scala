@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function FormularioOrdenes({ agregarOrden }) {
+function FormularioOrdenes({ agregarOrden, actualizarOrden }) {
   const [formData, setFormData] = useState({
     customer_name: '',
     product_name: '',

@@ -8,6 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell'; 
+import { IconButton } from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,7 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function TablaOrdenes({ orders }) {
+export default function TablaOrdenes({ orders, eliminarOrden }) {
   return (
     <div style={{ padding: '20px' }}>
       <TableContainer component={Paper} sx={{ mt: 4, mb: 4, borderRadius: 2, overflow: 'hidden' }}>
@@ -81,6 +84,14 @@ export default function TablaOrdenes({ orders }) {
                   <StyledTableCell align="left">{order.status}</StyledTableCell>
                   <StyledTableCell align="left">{order.payment_method}</StyledTableCell>
                   <StyledTableCell align="left">{order.notes || 'N/A'}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    <IconButton color="primary" aria-label="edit" size="small">
+                      <Edit fontSize="inherit" />
+                    </IconButton>
+                    <IconButton color="secondary" aria-label="delete" size="small">
+                      <Delete fontSize="inherit" onClick={()=>console.log(`order id: ${order.status}`)} />
+                    </IconButton>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))
             )}

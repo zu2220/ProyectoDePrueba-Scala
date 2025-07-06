@@ -11,3 +11,7 @@ export const getOrders = async () => {
 };
 
 export const createOrder = async (orderData) => await axiosInstance.post("/orders", orderData);
+
+export const updateOrder = async (id, orderData) => await axiosInstance.put(`/orders/${id}`, orderData);
+
+export const deleteOrder = async (id) => await axiosInstance.delete(`/orders/${id}`);
