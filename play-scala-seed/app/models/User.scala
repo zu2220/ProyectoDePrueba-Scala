@@ -4,6 +4,7 @@ import play.api.libs.json._
 import java.util.Date
 
 case class User(
+  _id: Option[String],
   nombre: String,
   apellido: String,
   nacimiento: String,
@@ -14,5 +15,5 @@ case class User(
 )
 
 object User {
-  implicit val format: OFormat[User] = Json.format[User]
+  implicit val Userformat: Format[User] = Json.format[User]
 }

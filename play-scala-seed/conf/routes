@@ -22,6 +22,10 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /api/users        controllers.UserController.getUsers
 +nocsrf
 POST    /api/users        controllers.UserController.createUser
++nocsrf
+PUT     /api/users/:id    controllers.UserController.editUser(id: String)
++nocsrf
+DELETE  /api/users/:id    controllers.UserController.deleteUser(id: String)
 
 # Rutas para los proveedores
 GET     /api/suppliers        controllers.SupplierController.getSupplier

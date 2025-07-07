@@ -1,3 +1,34 @@
+error id: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/UserController.scala:`<none>`.
+file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/UserController.scala
+empty definition using pc, found symbol in pc: `<none>`.
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -javax/inject/result/getDeletedCount.
+	 -javax/inject/result/getDeletedCount#
+	 -javax/inject/result/getDeletedCount().
+	 -play/api/mvc/result/getDeletedCount.
+	 -play/api/mvc/result/getDeletedCount#
+	 -play/api/mvc/result/getDeletedCount().
+	 -play/api/libs/json/result/getDeletedCount.
+	 -play/api/libs/json/result/getDeletedCount#
+	 -play/api/libs/json/result/getDeletedCount().
+	 -org/mongodb/scala/result/getDeletedCount.
+	 -org/mongodb/scala/result/getDeletedCount#
+	 -org/mongodb/scala/result/getDeletedCount().
+	 -org/mongodb/scala/model/Filters.result.getDeletedCount.
+	 -org/mongodb/scala/model/Filters.result.getDeletedCount#
+	 -org/mongodb/scala/model/Filters.result.getDeletedCount().
+	 -result/getDeletedCount.
+	 -result/getDeletedCount#
+	 -result/getDeletedCount().
+	 -scala/Predef.result.getDeletedCount.
+	 -scala/Predef.result.getDeletedCount#
+	 -scala/Predef.result.getDeletedCount().
+offset: 3092
+uri: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/UserController.scala
+text:
+```scala
 package controllers
 
 import javax.inject._
@@ -86,7 +117,7 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
   def deleteUser(id: String): Action[AnyContent] = Action.async {
     val filter = equal("_id", new ObjectId(id))
     collection.deleteOne(filter).toFuture().map { result =>
-      if (result.getDeletedCount > 0) {
+      if (result.getDeletedCou@@nt > 0) {
         Ok(Json.obj("status" -> "User deleted successfully"))
       } else {
         NotFound(Json.obj("error" -> "User not found"))
@@ -94,3 +125,9 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
     }
 }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: `<none>`.
