@@ -8,8 +8,8 @@ const UserContext = createContext();
 export const useUsers = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error('useUsers must be used within a UserProvider');
-  }
+    console.log('useUsers must be used within a UserProvider');
+};
   return context;
 };
 
@@ -24,6 +24,8 @@ export const UserProvider = ({ children }) => {
         try {
         const data = await getUsers();
         setUsers(data);
+        console.log("1. :" + data)
+        console.log("2. :" + data.data)
         } catch (err) {
         console.error("Error fetching users in context:", err);
         setError(err);
@@ -90,8 +92,8 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={contextValue}>
-        {children}
-        </UserContext.Provider>
+            <UserContext.Provider value={contextValue}>
+            {children}
+            </UserContext.Provider>
         );
     }
