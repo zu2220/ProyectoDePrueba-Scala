@@ -4,6 +4,7 @@ import { getUsers, createUser, updateUser, deleteUser } from '../api/users.js';
 // Se define el contexto para los usuarios
 // Este contexto se utilizará para compartir el estado de los usuarios en toda la aplicación   
 const UserContext = createContext();
+
 export const useUsers = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
@@ -24,7 +25,7 @@ export const UserProvider = ({ children }) => {
         const data = await getUsers();
         setUsers(data);
         } catch (err) {
-        console.error("Error al obtener usuarios en el contexto:", err);
+        console.error("Error fetching users in context:", err);
         setError(err);
         } finally {
         setLoading(false);
@@ -38,7 +39,7 @@ export const UserProvider = ({ children }) => {
         await fetchUsers(); 
         return true;
         } catch (err) {
-        console.error("Error al crear usuario:", err);
+        console.error("Error creating user:", err);
         setError(err);
         return false;
         }
@@ -51,7 +52,7 @@ export const UserProvider = ({ children }) => {
         await fetchUsers(); 
         return true;
         } catch (err) {
-        console.error("Error al editar usuario:", err);
+        console.error("Error editing user:", err);
         setError(err);
         return false;
         }
@@ -64,19 +65,33 @@ export const UserProvider = ({ children }) => {
         await fetchUsers(); 
         return true;
         } catch (err) {
-        console.error("Error al eliminar usuario:", err);
+        console.error("Error deleting user:", err);
         setError(err);
         return false;
         }
+    };
+
+    const clearUsers = () => {
+        setUsers([]);
     };
     
     useEffect(() => {
         fetchUsers();
     }, []);
     
+    const contextValue = {
+        users,
+        loading,
+        error,
+        addUser,
+        editUser,
+        removeUser,
+        clearUsers
+    };
+
     return (
-        <UserContext.Provider value={{ users, loading, error, addUser, editUser, removeUser }}>
+        <UserContext.Provider value={contextValue}>
         {children}
         </UserContext.Provider>
-    );
+        );
     }
