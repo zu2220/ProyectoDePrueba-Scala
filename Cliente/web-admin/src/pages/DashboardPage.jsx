@@ -187,6 +187,7 @@ function DashboardPage() {
       </div>
     </div>
   );
+  
   if (error) return (
     <div className="d-flex" style={{ minHeight: '100vh' }}>
       <SideBar />

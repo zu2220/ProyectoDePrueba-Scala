@@ -5,7 +5,7 @@ import TablaOrdenes from "../components/OrderComponents/TablaOrdenes";
 import { useOrders } from "../context/OrderContext";
 
 function OrdersPage() {
-  const { orders, addOrder, updateOrder, deleteOrder, loading, error, clearOrders } = useOrders(); 
+  const { orders, addOrder, updateOrder, deleteOrder, loading, error } = useOrders(); 
 
   async function handleAgregarOrden(nuevaOrden) {
     const success = await addOrder(nuevaOrden);
@@ -44,6 +44,7 @@ function OrdersPage() {
       </div>
     </div>
   );
+  
   if (error) return (
     <div style={{ display: 'flex' }}>
       <SideBar />

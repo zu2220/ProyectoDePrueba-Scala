@@ -27,13 +27,14 @@ function UsersPage() {
       console.log(error);
     }
   }
+  
   return (
     <div style={{display: 'flex'}}>
       <SideBar />
       <div style={{flexGrow: 1, padding: '20px'}}>
         <FormularioRegistroUsuarios agregarUsuario={agregarUsuario} />
         <TablaUsuarios users={users} />
-    </div>
+      </div>
     </div>
   );
 }

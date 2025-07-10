@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 
 function SideBar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userEmail');
+    navigate('/login');
+  };
+
   return (
     <div className="d-flex flex-column p-3 text-white bg-dark" style={{ width: '280px', minHeight: '100vh' }}>
       <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -46,6 +54,15 @@ function SideBar() {
         </li>
       </ul>
       <hr />
+      <div className="mt-auto">
+        <button
+          className="btn btn-outline-danger w-100"
+          onClick={handleLogout}
+        >
+          <i className="bi bi-box-arrow-right me-2"></i>
+          Cerrar Sesión
+        </button>
+      </div>
     </div>
   );
 }
