@@ -1,3 +1,34 @@
+error id: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/SupplierController.scala:`<none>`.
+file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/SupplierController.scala
+empty definition using pc, found symbol in pc: `<none>`.
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -javax/inject/Created.
+	 -javax/inject/Created#
+	 -javax/inject/Created().
+	 -play/api/mvc/Created.
+	 -play/api/mvc/Created#
+	 -play/api/mvc/Created().
+	 -play/api/libs/json/Created.
+	 -play/api/libs/json/Created#
+	 -play/api/libs/json/Created().
+	 -org/mongodb/scala/Created.
+	 -org/mongodb/scala/Created#
+	 -org/mongodb/scala/Created().
+	 -org/mongodb/scala/model/Filters.Created.
+	 -org/mongodb/scala/model/Filters.Created#
+	 -org/mongodb/scala/model/Filters.Created().
+	 -Created.
+	 -Created#
+	 -Created().
+	 -scala/Predef.Created.
+	 -scala/Predef.Created#
+	 -scala/Predef.Created().
+offset: 1611
+uri: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/SupplierController.scala
+text:
+```scala
 package controllers
 
 import javax.inject._
@@ -44,48 +75,15 @@ class SupplierController @Inject()(val controllerComponents: ControllerComponent
           "address" -> supplier.address,
           "supply" -> supplier.supply
           )
-        collection.insertOne(doc).toFuture().map(result => {
-          val supplierWithId = supplier.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
-          Created(Json.toJson(supplier))
-        })
+        collection.insertOne(doc).toFuture().map(_ => @@Created(Json.toJson(supplier)))
       }
     )
   }
-
-  def editSupplier(id: String): Action[JsValue] = Action(parse.json).async {request =>
-    request.body.validate[Supplier].fold(
-      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid Supplier format"))),
-      supplier =>{
-        val filter = equal("_id", new ObjectId(id))
-        val update = Document(
-          "$set" -> Document(
-            "name" -> supplier.name,
-            "email" -> supplier.email,
-            "phone" -> supplier.phone,
-            "address" -> supplier.address,
-            "supply" -> supplier.supply
-          )
-        )
-        collection.updateOne(filter, update).toFuture.map(result=>{
-          if(result.getModifiedCount > 0){
-            Ok(Json.toJson(supplier))
-          } else{
-            NotFound(Json.obj("error" -> "The supplier wasn't found"))
-          }
-        })
-      }
-    )  
-  } 
-
-  def deleteSupplier(id: String): Action[AnyContent] = Action.async {
-    val filter = equal("_id", new ObjectId(id))
-
-    collection.deleteOne(filter).toFuture.map(result =>{
-      if(result.getDeletedCount > 0){
-        Ok(Json.obj("message" -> "The supplier was deleted succesfully"))
-      } else{
-        NotFound(Json.obj("error" -> "The supplier wasn't found"))
-      }
-    })
-  }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: `<none>`.

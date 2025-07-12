@@ -3,6 +3,7 @@ package models
 import play.api.libs.json._
 
 case class Supplier(
+  _id: Option[String],
   name: String,
   email: String,
   phone: String,
@@ -11,5 +12,5 @@ case class Supplier(
   )
 
 object Supplier {
-  implicit val format: OFormat[Supplier] = Json.format[Supplier]
+  implicit val supplierformat: Format[Supplier] = Json.format[Supplier]
 }

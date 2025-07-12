@@ -1,3 +1,34 @@
+error id: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/OrderController.scala:`<none>`.
+file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/OrderController.scala
+empty definition using pc, found symbol in pc: `<none>`.
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -javax/inject/Created.
+	 -javax/inject/Created#
+	 -javax/inject/Created().
+	 -play/api/mvc/Created.
+	 -play/api/mvc/Created#
+	 -play/api/mvc/Created().
+	 -play/api/libs/json/Created.
+	 -play/api/libs/json/Created#
+	 -play/api/libs/json/Created().
+	 -org/mongodb/scala/Created.
+	 -org/mongodb/scala/Created#
+	 -org/mongodb/scala/Created().
+	 -org/mongodb/scala/model/Filters.Created.
+	 -org/mongodb/scala/model/Filters.Created#
+	 -org/mongodb/scala/model/Filters.Created().
+	 -Created.
+	 -Created#
+	 -Created().
+	 -scala/Predef.Created.
+	 -scala/Predef.Created#
+	 -scala/Predef.Created().
+offset: 1763
+uri: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/OrderController.scala
+text:
+```scala
 package controllers
 
 import javax.inject._
@@ -46,50 +77,14 @@ class OrderController @Inject()(val controllerComponents: ControllerComponents)(
             "status" -> order.status,
             "payment_method" -> order.payment_method
         )
-        collection.insertOne(doc).toFuture().map(_ => {
-          val orderWithId = order.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
-          Created(Json.toJson(orderWithId))
-        })
+        collection.insertOne(doc).toFuture().map(_ => @@Created(Json.toJson(order)))
       }
     )
-  }
-
-  def editOrder(id: String): Action[JsValue] = Action(parse.json).async {request =>
-    request.body.validate[Order].fold(
-      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid Order format"))),
-      order => {
-        val filter = equal("_id", new ObjectId(id))
-        val update = Document(
-          "$set" -> Document(
-              "product_name" -> order.product_name,
-              "order_date" -> order.order_date,
-              "total_amount" -> order.total_amount,
-              "customer_name" -> order.customer_name,
-              "status" -> order.status,
-              "payment_method" -> order.payment_method
-          )
-        )
-
-        collection.updateOne(filter, update).toFuture().map(result => {
-          if(result.getModifiedCount > 0) {
-            Ok(Json.toJson(order))
-          } else{
-            NotFound(Json.obj("error" -> "The order wasn't found"))
-          }
-        })
-      }
-    )
-  }
-
-  def deleteOrder(id: String) : Action[AnyContent] = Action.async {
-    val filter = equal("_id", new ObjectId(id))
-
-    collection.deleteOne(filter).toFuture().map(result => {
-      if(result.getDeletedCount > 0) {
-        Ok(Json.obj("message" -> "The order was deleted successfully"))
-      } else{
-        NotFound(Json.obj("error" -> "The order wasn't found"))
-      }
-    })
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: `<none>`.

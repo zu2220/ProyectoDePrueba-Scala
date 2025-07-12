@@ -1,3 +1,14 @@
+error id: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/ClientController.scala:`<none>`.
+file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/ClientController.scala
+empty definition using pc, found symbol in pc: `<none>`.
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 1938
+uri: file:///C:/Users/oscar/GitHub/ProyectoDePrueba-Scala/play-scala-seed/app/controllers/ClientController.scala
+text:
+```scala
 package controllers
 
 import javax.inject._
@@ -42,48 +53,17 @@ class ClientController @Inject()(val controllerComponents: ControllerComponents)
                         "address" -> client.address,
                         "birthdate" -> client.birthdate
                     )
-                    collection.insertOne(doc).toFuture().map(result =>{
-                        val clientWithId = client.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
+                    collection.insertOne(doc).toFuture().map{
+                        @@val clientWithId = client.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
                         Created(Json.toJson(clientWithId))
-                    })
+                    }
                 }
             )
-        }
-
-        def editClient(id: String): Action[JsValue] = Action(parse.json).async {request =>
-            request.body.validate[Client].fold(
-                errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid clien format"))),
-                client => {
-                    val filter = equal("_id", new ObjectId(id))
-                    val update = Document(
-                        "$set" -> Document(
-                        "name" -> client.name,
-                        "email" -> client.email,
-                        "phone" -> client.phone,
-                        "address" -> client.address,
-                        "birthdate" -> client.birthdate
-                        )
-                    )
-                    collection.updateOne(filter, update).toFuture().map(result =>{
-                        if(result.getModifiedCount > 0){
-                            Ok(Json.toJson(client))
-                        } else{
-                            NotFound(Json.obj("error" -> "The client wasn't found"))
-                        }
-                    })
-                }
-            )
-        }
-
-        def deleteClient(id: String): Action[AnyContent] = Action.async {
-            val filter = equal("_id", new ObjectId(id))
-
-            collection.deleteOne(filter).toFuture.map(result =>{
-                if(result.getDeletedCount > 0){
-                    Ok(Json.obj("message" -> "The client was deleted succesfully"))
-                } else {
-                    NotFound(Json.obj("error" -> "The client wasn't found"))
-                }
-            })
         }
     }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: `<none>`.
