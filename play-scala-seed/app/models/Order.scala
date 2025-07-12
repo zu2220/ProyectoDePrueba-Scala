@@ -4,6 +4,7 @@ import play.api.libs.json._
 import java.util.Date
 
 case class Order(
+  _id : Option[String],
   product_name: String,
   order_date: Date,
   total_amount: Double,
@@ -13,5 +14,5 @@ case class Order(
   )
 
 object Order{
-  implicit val format: OFormat[Order] = Json.format[Order]
+  implicit val orderFormat: Format[Order] = Json.format[Order]
 }

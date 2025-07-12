@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
+import { IconButton } from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,7 +37,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function Tablausers({users}) {
+export default function 
+
+
+Tablausers({users, eliminarUsuario, seleccionarUsuario}) {
+  console.log("users: " + users.data)
   return (
     <div style={{ padding: '20px' }}>
       <TableContainer component={Paper} sx={{ mt: 4, mb: 4, borderRadius: 2, overflow: 'hidden' }}> 
@@ -49,32 +55,29 @@ export default function Tablausers({users}) {
               <StyledTableCell align="left">Contraseña</StyledTableCell> 
               <StyledTableCell align="left">Celular</StyledTableCell> 
               <StyledTableCell align="left">Rol</StyledTableCell> 
+              <StyledTableCell align="left">Acciones</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
-            {users.length === 0 ? (
-              <StyledTableRow>
-                <StyledTableCell colSpan={7} align="center" sx={{ py: 3 }}>
-                  No hay usuarios registrados.
+            {Array.isArray(users) && users.map((user, idx) => (
+              <StyledTableRow key={user.id || idx}>
+                <StyledTableCell>{user.nombre}</StyledTableCell>
+                <StyledTableCell align="left">{user.apellido}</StyledTableCell>
+                <StyledTableCell align="left">{user.fechaNacimiento}</StyledTableCell>
+                <StyledTableCell align="left">{user.correo}</StyledTableCell>
+                <StyledTableCell align="left">{user.contraseña}</StyledTableCell>
+                <StyledTableCell align="left">{user.celular}</StyledTableCell>
+                <StyledTableCell align="left">{user.rol}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <IconButton onClick={() => seleccionarUsuario(user)}>
+                    <Edit />
+                  </IconButton>
+                  <IconButton onClick={() => eliminarUsuario(user.id)}>
+                    <Delete />
+                  </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
-            ) : (
-              users.map((user, index) => (
-                <StyledTableRow key={user._id || index}>
-                  <StyledTableCell component="th" scope="row">
-                    {user.nombre}
-                  </StyledTableCell>
-                  <StyledTableCell align='left'>{user.apellido}</StyledTableCell> 
-                  <StyledTableCell align="left">
-                    {user.nacimiento ? new Date(user.nacimiento).toLocaleDateString('es-PE') : 'N/A'}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">{user.correo}</StyledTableCell>
-                  <StyledTableCell align="left">********</StyledTableCell>
-                  <StyledTableCell align="left">{user.celular}</StyledTableCell>
-                  <StyledTableCell align="left">{user.rol}</StyledTableCell>
-                </StyledTableRow>
-              ))
-            )}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

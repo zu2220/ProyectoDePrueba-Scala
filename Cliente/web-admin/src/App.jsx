@@ -2,22 +2,28 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { OrderProvider } from './context/OrderContext'; 
+import { OrderProvider } from './context/OrderContext';
 import DashboardPage from './pages/DashboardPage';
 import UsersPage from './pages/UsersPage';
 import OrdersPage from './pages/OrdersPage';
 import ProductsPage from './pages/ProductsPage';
-import CustomersPage from './pages/CustomersPage'; 
-import SuppliersPage from './pages/SuppliersPage'; 
+import CustomersPage from './pages/CustomersPage';
+import SuppliersPage from './pages/SuppliersPage';
 import SuppliesPage from './pages/SuppliesPage';
+<<<<<<< HEAD
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
+=======
+import { UserProvider } from './context/UserContext';
+>>>>>>> f/cambios
 
 function App() {
   return (
     <Router>
       <OrderProvider>
+        <UserProvider>
         <Routes>
+<<<<<<< HEAD
           {/* Ruta pública */}
           <Route path="/login" element={<LoginPage />} />
           
@@ -62,7 +68,18 @@ function App() {
               <SuppliesPage />
             </ProtectedRoute>
           } />
+=======
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/users" element={<UsersPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/clients" element={<CustomersPage />} />
+          <Route path="/providers" element={<SuppliersPage />} />
+          <Route path="/supplies" element={<SuppliesPage />} />
+>>>>>>> f/cambios
         </Routes>
+        </UserProvider>
       </OrderProvider>
     </Router>
   );

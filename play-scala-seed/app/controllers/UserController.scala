@@ -20,6 +20,7 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
     collection.find().toFuture().map { docs =>
       val users = docs.map { doc =>
         User(
+          doc.get("_id").map(_.asObjectId().getValue.toHexString),
           doc.getString("nombre"),
           doc.getString("apellido"),
           doc.getString("nacimiento"),
@@ -38,6 +39,7 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
       errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid user format"))),
       user => {
         val doc = Document(
+          "_id" -> new ObjectId(),
           "nombre" -> user.nombre,
            "apellido" -> user.apellido,
            "nacimiento" -> user.nacimiento,
@@ -46,10 +48,49 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
            "celular" -> user.celular,
            "rol" -> user.rol
         )
-        collection.insertOne(doc).toFuture().map(_ => Created(Json.toJson(user)))
+        collection.insertOne(doc).toFuture().map(result => {
+          val userWithId = user.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
+          Created(Json.toJson(userWithId))
+        })
       }
     )
   }
-} 
 
+  def editUser(id: String): Action[JsValue] = Action(parse.json).async { request =>
+    request.body.validate[User].fold(
+      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid user format"))),
+      user => {
+        val filter = equal("_id", new ObjectId(id))
+        val update = Document(
+          "$set" -> Document(
+            "nombre" -> user.nombre,
+            "apellido" -> user.apellido,
+            "nacimiento" -> user.nacimiento,
+            "correo" -> user.correo,
+            "contrasena" -> user.contrasena,
+            "celular" -> user.celular,
+            "rol" -> user.rol
+          )
+        )
+        collection.updateOne(filter, update).toFuture().map { result =>
+          if (result.getModifiedCount > 0) {
+            Ok(Json.obj("status" -> "User updated successfully"))
+          } else {
+            NotFound(Json.obj("error" -> "User not found"))
+          }
+        }
+      }
+    )
+  }
 
+  def deleteUser(id: String): Action[AnyContent] = Action.async {
+    val filter = equal("_id", new ObjectId(id))
+    collection.deleteOne(filter).toFuture().map { result =>
+      if (result.getDeletedCount > 0) {
+        Ok(Json.obj("status" -> "User deleted successfully"))
+      } else {
+        NotFound(Json.obj("error" -> "User not found"))
+      }
+    }
+}
+}
