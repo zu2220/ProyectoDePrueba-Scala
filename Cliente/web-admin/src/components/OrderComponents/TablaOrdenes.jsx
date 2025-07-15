@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell'; 
 import { IconButton } from '@mui/material';
 import {Edit, Delete} from '@mui/icons-material';
+import { deleteOrder } from '../../api/orders';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -38,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function TablaOrdenes({ orders, eliminarOrden }) {
+export default function TablaOrdenes({ orders, eliminarOrden, seleccionarOrden }) {
   return (
     <div style={{ padding: '20px' }}>
       <TableContainer component={Paper} sx={{ mt: 4, mb: 4, borderRadius: 2, overflow: 'hidden' }}>
@@ -85,11 +86,11 @@ export default function TablaOrdenes({ orders, eliminarOrden }) {
                   <StyledTableCell align="left">{order.payment_method}</StyledTableCell>
                   <StyledTableCell align="left">{order.notes || 'N/A'}</StyledTableCell>
                   <StyledTableCell align="left">
-                    <IconButton color="primary" aria-label="edit" size="small">
+                    <IconButton color="primary" aria-label="edit" size="small" onClick={()=>seleccionarOrden(order)}>
                       <Edit fontSize="inherit" />
                     </IconButton>
-                    <IconButton color="secondary" aria-label="delete" size="small">
-                      <Delete fontSize="inherit" onClick={()=>console.log(`order id: ${order.status}`)} />
+                    <IconButton color="secondary" aria-label="delete" size="small" onClick={()=>eliminarOrden(order._id)}>
+                      <Delete fontSize="inherit"/>
                     </IconButton>
                   </StyledTableCell>
                 </StyledTableRow>

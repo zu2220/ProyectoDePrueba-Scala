@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import SideBar from "../components/SideBar"; 
+import SideBar from "../components/general/SideBar"; 
 import { useOrders } from "../context/OrderContext"; 
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns'; 

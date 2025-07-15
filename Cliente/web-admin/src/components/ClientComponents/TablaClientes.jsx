@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles'; 
 import { tableCellClasses } from '@mui/material/TableCell'; 
 import dayjs from 'dayjs'; 
+import { IconButton } from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function TablaClientes({ clients }) {
+export default function TablaClientes({ clients, seleccionarCliente, eliminarCliente }) {
   return (
     <div style={{ padding: '20px', marginTop: '30px' }}>
       <Typography variant="h5" component="h2" gutterBottom>
@@ -53,6 +55,7 @@ export default function TablaClientes({ clients }) {
               <StyledTableCell align="left">Teléfono</StyledTableCell>
               <StyledTableCell align="left">Dirección</StyledTableCell>
               <StyledTableCell align="left">Fecha de Nacimiento</StyledTableCell>
+              <StyledTableCell align='left'>Acciones</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
@@ -76,6 +79,14 @@ export default function TablaClientes({ clients }) {
                   <StyledTableCell align="left">{client.address || 'N/A'}</StyledTableCell>
                   <StyledTableCell align="left">
                     {client.birthdate ? dayjs(client.birthdate).format('DD/MM/YYYY') : 'N/A'}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <IconButton color='primary' aria-label='edit' size='small' onClick={()=>seleccionarCliente(client)}>
+                      <Edit fontSize='inherit'/>
+                    </IconButton>
+                    <IconButton color='secondary' aria-label='delete' size='small' onClick={()=>eliminarCliente(client._id)}>
+                      <Delete fontSize='inherit'/>
+                    </IconButton>
                   </StyledTableCell>
                 </StyledTableRow>
               ))

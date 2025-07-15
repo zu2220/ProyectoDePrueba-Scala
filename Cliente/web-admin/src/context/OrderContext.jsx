@@ -17,10 +17,17 @@ export const useOrders = () => {
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchOrders = async () => {
-    setLoading(true);
+  const fetchOrders = async (isRefresh = false) => {
+    
+    if(isRefresh){
+      setIsRefreshing(true);
+    } else{
+      setLoading(true);
+    }
+
     setError(null);
     try {
       const data = await getOrders();
@@ -48,7 +55,11 @@ export const OrderProvider = ({ children }) => {
       console.error("Error al obtener órdenes en el contexto:", err);
       setError(err);
     } finally {
-      setLoading(false);
+      if(isRefreshing){
+        setIsRefreshing(false);
+      } else {
+        setLoading(false);
+      }
     }
   };
 
@@ -56,7 +67,7 @@ export const OrderProvider = ({ children }) => {
     setError(null);
     try {
       await createOrder(newOrderData);
-      await fetchOrders(); 
+      await fetchOrders(true); 
       return true;
     } catch (err) {
       console.error("Error al agregar orden en el contexto:", err);
@@ -65,11 +76,11 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
-  const updateOrder = async (updatedOrder)=>{
+  const editOrder = async (updatedOrder)=>{
     setError(null);
     try {
       await updateOrder(updatedOrder._id, updatedOrder);
-      await fetchOrders(); 
+      await fetchOrders(true); 
       return true;
     } catch (err) {
       console.error("Error al actualizar orden en el contexto:", err);
@@ -78,11 +89,11 @@ export const OrderProvider = ({ children }) => {
     }
   }
 
-  const deleteOrder = async (id) => {
+  const removeOrder = async (id) => {
     setError(null);
     try {
       await deleteOrder(id);
-      await fetchOrders(); 
+      await fetchOrders(true); 
       return true;
     } catch (err) {
       console.error("Error al eliminar orden en el contexto:", err);
@@ -105,8 +116,8 @@ export const OrderProvider = ({ children }) => {
     error,
     fetchOrders,
     addOrder,
-    updateOrder,
-    deleteOrder,
+    editOrder,
+    removeOrder,
     clearOrders, 
   };
 

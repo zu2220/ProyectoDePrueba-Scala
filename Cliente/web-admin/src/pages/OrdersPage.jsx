@@ -1,11 +1,12 @@
-import React from "react";
-import SideBar from "../components/SideBar"; 
+import React, {useState} from "react";
+import SideBar from "../components/general/SideBar"; 
 import FormularioOrdenes from "../components/OrderComponents/FormularioOrdenes"; 
 import TablaOrdenes from "../components/OrderComponents/TablaOrdenes"; 
 import { useOrders } from "../context/OrderContext";
 
 function OrdersPage() {
-  const { orders, addOrder, updateOrder, deleteOrder, loading, error } = useOrders(); 
+  const { orders, addOrder, editOrder, removeOrder, loading, error } = useOrders(); 
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   async function handleAgregarOrden(nuevaOrden) {
     const success = await addOrder(nuevaOrden);
@@ -17,20 +18,31 @@ function OrdersPage() {
   }
 
   async function handleActualizarOrden(ordenActualizada) {
-    const success = await updateOrder(ordenActualizada._id, ordenActualizada);
+    console.log("id de la orden: " + ordenActualizada._id);
+    const success = await editOrder(ordenActualizada);
     if (success) {
       alert("Orden actualizada con éxito!");
+      setSelectedOrder(null);
     } else {
       alert("Error al actualizar la orden. Por favor, intente de nuevo.");
+      setSelectedOrder(null);
     }
   }
 
   async function handleEliminarOrden(id) {
-    const success = await deleteOrder(id);
+    const success = await removeOrder(id);
     if (success) {
       alert("Orden eliminada con éxito!");
     } else {
       alert("Error al eliminar la orden. Por favor, intente de nuevo.");
+    }
+  }
+
+  function handleSeleccionarOrden(order){
+    if(!selectedOrder) {
+      setSelectedOrder(order);
+    } else {
+      setSelectedOrder(null);
     }
   }
 
@@ -61,9 +73,9 @@ function OrdersPage() {
       <div style={{ flexGrow: 1, padding: '20px' }}>
         <h1>Gestión de Órdenes de Venta</h1>
         <FormularioOrdenes agregarOrden={handleAgregarOrden}
-        actualizarOrden={handleActualizarOrden} />
+        actualizarOrden={handleActualizarOrden} ordenSeleccionada={selectedOrder} />
         <TablaOrdenes orders={orders}
-        eliminarOrden={handleEliminarOrden} />
+        eliminarOrden={handleEliminarOrden} seleccionarOrden={handleSeleccionarOrden} />
       </div>
     </div>
   );

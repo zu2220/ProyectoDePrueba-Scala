@@ -37,11 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function 
+export default function Tablausers({users, eliminarUsuario, seleccionarUsuario}) {
 
-
-Tablausers({users, eliminarUsuario, seleccionarUsuario}) {
-  console.log("users: " + users.data)
   return (
     <div style={{ padding: '20px' }}>
       <TableContainer component={Paper} sx={{ mt: 4, mb: 4, borderRadius: 2, overflow: 'hidden' }}> 
@@ -63,17 +60,19 @@ Tablausers({users, eliminarUsuario, seleccionarUsuario}) {
               <StyledTableRow key={user.id || idx}>
                 <StyledTableCell>{user.nombre}</StyledTableCell>
                 <StyledTableCell align="left">{user.apellido}</StyledTableCell>
-                <StyledTableCell align="left">{user.fechaNacimiento}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {user.nacimiento ? new Date(user.nacimiento).toLocaleDateString('es-PE') : 'N/A'}
+                </StyledTableCell>
                 <StyledTableCell align="left">{user.correo}</StyledTableCell>
-                <StyledTableCell align="left">{user.contraseña}</StyledTableCell>
+                <StyledTableCell align="left">{user.contrasena}</StyledTableCell>
                 <StyledTableCell align="left">{user.celular}</StyledTableCell>
                 <StyledTableCell align="left">{user.rol}</StyledTableCell>
                 <StyledTableCell align="left">
-                  <IconButton onClick={() => seleccionarUsuario(user)}>
-                    <Edit />
+                  <IconButton  color="primary" aria-label="edit" size="small" onClick={() => seleccionarUsuario(user)}>
+                    <Edit fontSize="inherit" />
                   </IconButton>
-                  <IconButton onClick={() => eliminarUsuario(user.id)}>
-                    <Delete />
+                  <IconButton color="secondary" aria-label='delete' size="small" onClick={() => eliminarUsuario(user._id)}>
+                    <Delete fontSize='inherit'/>
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>

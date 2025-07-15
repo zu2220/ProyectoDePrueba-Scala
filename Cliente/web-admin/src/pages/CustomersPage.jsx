@@ -1,33 +1,71 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/general/SideBar";
 import FormularioClientes from "../components/ClientComponents/FormularioClientes";
 import TablaClientes from "../components/ClientComponents/TablaClientes";
-import { createClient, getClients } from "../api/clients.js";
+import {useClient} from "../context/ClientContext";
 
 function ClientsPage() {
-  const [clients, setClients] = useState([]); 
+  const {clients, loading, error, addClient, editClient, removeClient} = useClient();
+  const [clienteSeleccionado, setclienteSeleccionado] = useState(null);
 
-  useEffect(() => {
-    async function fetchClients() {
-      try {
-        const data = await getClients();
-        setClients(data);
-      } catch (error) {
-        console.error("Error al obtener clientes:", error);
-      }
+  function handleSeleccionarCliente(cliente){
+    if(!clienteSeleccionado){
+      setclienteSeleccionado(cliente);
+    } else {
+      setclienteSeleccionado(null);
     }
-    fetchClients();
-  }, []);
+  }
 
-  async function agregarCliente(nuevoCliente) {
-    try {
-      const response = await createClient(nuevoCliente);
-      setClients([...clients, response]);
+  async function handleAgregarCliente(cliente) {
+    const success = await addClient(cliente);
+
+    if(success){
       alert("Cliente guardado con éxito!");
-    } catch (error) {
-      console.error("Error al agregar cliente:", error);
-      alert("Error al guardar el cliente. Por favor, intente de nuevo.");
+    } else {
+      alert("No se pudo guardar al cliente. Por favor, intente de nuevo");
     }
+  }
+
+  async function handleActualizarCliente(cliente) {
+    const success = await editClient(cliente);
+
+    if(success){
+      alert("Cliente actualizado con éxito!");
+    } else {
+      alert("No se pudo actualizar los datos del cliente. Por favor, intente de nuevo.");
+    }
+
+    setclienteSeleccionado(null);
+  }
+
+  async function handleEliminarCliente(clienteId) {
+    const success = await removeClient(clienteId);
+
+    if(success) {
+      alert("Cliente eliminado con éxito!");
+    } else {
+      alert("No se pudo eliminar al cliente. Por favor, intente de nuevo.");
+    }
+  }
+
+  if(loading){
+    <div style={{ display: 'flex' }}>
+      <SideBar />
+      <div style={{ flexGrow: 1, padding: '20px' }}>
+        <h1>Gestión de Clientes</h1>
+        <p className="text-center text-muted">Cargando clientes...</p>
+      </div>
+    </div>
+  }
+
+  if(error) {
+    <div style={{ display: 'flex' }}>
+      <SideBar />
+      <div style={{ flexGrow: 1, padding: '20px' }}>
+        <h1>Gestión de Clientes</h1>
+        <p className="text-center text-danger">Error al cargar a los clientes</p>
+      </div>
+    </div>
   }
 
   return (
@@ -35,8 +73,8 @@ function ClientsPage() {
       <SideBar />
       <div style={{ flexGrow: 1, padding: '20px' }}>
         <h1>Gestión de Clientes</h1>
-        <FormularioClientes agregarCliente={agregarCliente} />
-        <TablaClientes clients={clients} />
+        <FormularioClientes agregarCliente={handleAgregarCliente} clienteSeleccionado={clienteSeleccionado} actualizarCliente={handleActualizarCliente} />
+        <TablaClientes clients={clients} seleccionarCliente={handleSeleccionarCliente} eliminarCliente={handleEliminarCliente}/>
       </div>
     </div>
   );

@@ -26,7 +26,8 @@ class OrderController @Inject()(val controllerComponents: ControllerComponents)(
             doc.getDouble("total_amount"),
             doc.getString("customer_name"),
             doc.getString("status"),
-            doc.getString("payment_method")
+            doc.getString("payment_method"),
+            doc.getString("notes")
         )
       }
       Ok(Json.toJson(orders))
@@ -44,7 +45,8 @@ class OrderController @Inject()(val controllerComponents: ControllerComponents)(
             "total_amount" -> order.total_amount,
             "customer_name" -> order.customer_name,
             "status" -> order.status,
-            "payment_method" -> order.payment_method
+            "payment_method" -> order.payment_method,
+            "notes" -> order.notes
         )
         collection.insertOne(doc).toFuture().map(_ => {
           val orderWithId = order.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
@@ -66,7 +68,8 @@ class OrderController @Inject()(val controllerComponents: ControllerComponents)(
               "total_amount" -> order.total_amount,
               "customer_name" -> order.customer_name,
               "status" -> order.status,
-              "payment_method" -> order.payment_method
+              "payment_method" -> order.payment_method,
+              "notes" -> order.notes
           )
         )
 

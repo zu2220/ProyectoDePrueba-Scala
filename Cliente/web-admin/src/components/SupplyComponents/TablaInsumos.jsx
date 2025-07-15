@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles'; 
 import { tableCellClasses } from '@mui/material/TableCell';
+import { IconButton } from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function TablaInsumos({ supplies }) { 
+export default function TablaInsumos({ supplies, seleccionarInsumo, eliminarInsumo }) { 
   return (
     <div style={{ padding: '20px', marginTop: '30px' }}>
       <Typography variant="h5" component="h2" gutterBottom>
@@ -53,6 +55,7 @@ export default function TablaInsumos({ supplies }) {
               <StyledTableCell align="right">Proteínas (g)</StyledTableCell>
               <StyledTableCell align="left">Unidad</StyledTableCell>
               <StyledTableCell align="left">Proveedor</StyledTableCell>
+              <StyledTableCell align='left'>Acciones</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
@@ -78,6 +81,14 @@ export default function TablaInsumos({ supplies }) {
                   <StyledTableCell align="right">{supply.protein}</StyledTableCell>
                   <StyledTableCell align="left">{supply.unit}</StyledTableCell>
                   <StyledTableCell align="left">{supply.supplier || 'N/A'}</StyledTableCell>
+                  <StyledTableCell align='left'>
+                    <IconButton color='primary' aria-label='edit' size='small' onClick={()=>seleccionarInsumo(supply)}>
+                      <Edit fontSize='inherit'/>
+                    </IconButton>
+                    <IconButton color='secondary' aria-label='delete' size='small' onClick={()=>eliminarInsumo(supply._id)}>
+                      <Delete fontSize='inherit'/>
+                    </IconButton>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))
             )}

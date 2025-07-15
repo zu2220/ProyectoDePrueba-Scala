@@ -2,23 +2,13 @@
 import axiosInstance from "./axios.js"; 
 
 // Función para obtener todos los clientes
-export const getClients = async () => {
-  try {
-    const response = await axiosInstance.get("/clients");
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener clientes:", error);
-    throw error;
-  }
-};
+export const getClients = async () => axiosInstance.get("/clients");
 
 // Función para crear un nuevo cliente
-export const createClient = async (clientData) => {
-  try {
-    const response = await axiosInstance.post("/clients", clientData);
-    return response.data;
-  } catch (error) {
-    console.error("Error al crear el cliente:", error);
-    throw error;
-  }
-};
+export const createClient = async (clientData) => axiosInstance.post("/clients", clientData);
+
+// Función para actualizar a un cliente
+export const updateClient = async (clientId, clientData) => axiosInstance.put(`/clients/${clientId}`, clientData);
+
+// Función para eliminar a un cliente
+export const deleteClient = async (clientId) => axiosInstance.delete(`/clients/${clientId}`);

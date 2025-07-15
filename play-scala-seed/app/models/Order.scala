@@ -10,7 +10,8 @@ case class Order(
   total_amount: Double,
   customer_name: String,
   status: String,
-  payment_method: String
+  payment_method: String,
+  notes: String
   )
 
 object Order{

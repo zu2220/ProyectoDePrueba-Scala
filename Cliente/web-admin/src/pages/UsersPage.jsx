@@ -1,5 +1,5 @@
 import FormularioRegistroUsuarios from "../components/UserComponents/FormularioRegistroUsuarios.jsx";
-import SideBar from "../components/SideBar.jsx";
+import SideBar from "../components/general/SideBar.jsx";
 import TablaUsuarios from "../components/UserComponents/TablaUsuarios.jsx";
 import { useState, useEffect } from "react";
 import {createUser, getUsers} from "../api/users.js";
@@ -7,6 +7,7 @@ import { useUsers } from "../context/UserContext.jsx";
 
 function UsersPage() {
 const {users, loading, error, addUser, editUser, removeUser, clearUsers} = useUsers();
+const [selectedUser, setSelectedUser] = useState(null);
 
   async function handleAgregarUsuario(nuevoUsuario){
     const success = await addUser(nuevoUsuario);
@@ -16,9 +17,6 @@ const {users, loading, error, addUser, editUser, removeUser, clearUsers} = useUs
       alert("Error al guardar el usuario. Por favor, intente de nuevo.");
     }
   }
-<<<<<<< HEAD
-  
-=======
 
   async function handleActualizarUsuario(usuarioActualizado) {
     const success = await editUser(usuarioActualizado._id, usuarioActualizado);
@@ -41,7 +39,11 @@ const {users, loading, error, addUser, editUser, removeUser, clearUsers} = useUs
   function handleSeleccionarUsuario(usuario) {
     // Aquí puedes implementar la lógica para seleccionar un usuario
     // Por ejemplo, podrías abrir un modal con los detalles del usuario
-    console.log("Usuario seleccionado:", usuario);
+    if(!selectedUser) {
+      setSelectedUser(usuario);
+    } else {
+      setSelectedUser(null);
+    }
   }
 
 
@@ -65,21 +67,15 @@ const {users, loading, error, addUser, editUser, removeUser, clearUsers} = useUs
   );
 
 
->>>>>>> f/cambios
   return (
     <div style={{display: 'flex'}}>
       <SideBar />
       <div style={{flexGrow: 1, padding: '20px'}}>
-<<<<<<< HEAD
-        <FormularioRegistroUsuarios agregarUsuario={agregarUsuario} />
-        <TablaUsuarios users={users} />
-      </div>
-=======
-        <FormularioRegistroUsuarios agregarUsuario={handleAgregarUsuario} />
-        <TablaUsuarios users={users} eliminarUsuario={handleActualizarUsuario}
+        <FormularioRegistroUsuarios agregarUsuario={handleAgregarUsuario} usuarioSeleccionado={selectedUser}
+        actualizarUsuario={handleActualizarUsuario}/>
+        <TablaUsuarios users={users} eliminarUsuario={handleEliminarUsuario}
         seleccionarUsuario={handleSeleccionarUsuario} />
     </div>
->>>>>>> f/cambios
     </div>
   );
 }

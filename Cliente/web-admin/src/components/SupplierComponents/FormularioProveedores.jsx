@@ -1,48 +1,80 @@
-import { useState } from 'react';
-import { TextField, Button, Box, Grid } from '@mui/material'; 
+import { useState, useEffect } from 'react';
+import { TextField, Button, Box, Grid } from '@mui/material';
 
-const FormularioProveedores = ({ agregarProveedor }) => {
+const FormularioProveedores = ({ agregarProveedor, proveedorSeleccionado, actualizarProveedor }) => {
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [supply, setSupply] = useState('');
+  const emptyForm = {
+    _id: '',
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    supply: '',
+  }
+
+  const [formData, setFormData] = useState(emptyForm);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (proveedorSeleccionado) {
+      setIsEditing(true);
+      setFormData({
+        _id: proveedorSeleccionado._id || '',
+        name: proveedorSeleccionado.name || '',
+        email: proveedorSeleccionado.email || '',
+        phone: proveedorSeleccionado.phone || '',
+        address: proveedorSeleccionado.address || '',
+        supply: proveedorSeleccionado.supply || '',
+      })
+    } else {
+      setFormData(emptyForm);
+      setIsEditing(false);
+    }
+  }, [proveedorSeleccionado])
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const { name, email, phone, address, supply } = formData;
     if (name && email && phone && address && supply) {
-      agregarProveedor({ name, email, phone, address, supply });
-      console.log({name, email, phone, address, supply});
+      if (proveedorSeleccionado) {
+        actualizarProveedor(formData);
+        setIsEditing(false);
+      } else {
+        agregarProveedor(formData);
+        setFormData(emptyForm);
+      }
 
-      setName('');
-      setEmail('');
-      setPhone('');
-      setAddress('');
-      setSupply('');
     } else {
       alert('Por favor, complete todos los campos obligatorios.');
     }
   };
 
-  return (
+  if(isEditing){
+     return (
     <div className="card mb-4 shadow-sm">
       <div className="card-header bg-success text-white">
         <h2 className="h5 mb-0">Registrar Proveedor</h2>
       </div>
       <div className="card-body">
         <Box component="form" onSubmit={handleSubmit} sx={{ margin: '0 auto' }}>
-          <Grid container spacing={2}> 
+          <Grid container spacing={2}>
 
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Nombre del Proveedor"
                 variant="outlined"
                 fullWidth
-                name="name" 
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 required
                 margin="normal"
               />
@@ -55,8 +87,8 @@ const FormularioProveedores = ({ agregarProveedor }) => {
                 variant="outlined"
                 fullWidth
                 name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
                 margin="normal"
               />
@@ -69,8 +101,8 @@ const FormularioProveedores = ({ agregarProveedor }) => {
                 variant="outlined"
                 fullWidth
                 name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={formData.phone}
+                onChange={handleChange}
                 required
                 margin="normal"
               />
@@ -82,8 +114,8 @@ const FormularioProveedores = ({ agregarProveedor }) => {
                 variant="outlined"
                 fullWidth
                 name="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                value={formData.address}
+                onChange={handleChange}
                 margin="normal"
               />
             </Grid>
@@ -94,8 +126,8 @@ const FormularioProveedores = ({ agregarProveedor }) => {
                 variant="outlined"
                 fullWidth
                 name="supply"
-                value={supply}
-                onChange={(e) => setSupply(e.target.value)}
+                value={formData.supply}
+                onChange={handleChange} 
                 required
                 margin="normal"
               />
@@ -107,7 +139,100 @@ const FormularioProveedores = ({ agregarProveedor }) => {
                 variant="contained"
                 color="primary"
                 fullWidth
-                sx={{ mt: 2 }} 
+                sx={{ mt: 2 }}
+              >
+                EDITAR PROVEEDOR
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+    </div>
+  );
+  }
+
+  return (
+    <div className="card mb-4 shadow-sm">
+      <div className="card-header bg-success text-white">
+        <h2 className="h5 mb-0">Registrar Proveedor</h2>
+      </div>
+      <div className="card-body">
+        <Box component="form" onSubmit={handleSubmit} sx={{ margin: '0 auto' }}>
+          <Grid container spacing={2}>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Nombre del Proveedor"
+                variant="outlined"
+                fullWidth
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Email"
+                type="email"
+                variant="outlined"
+                fullWidth
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Teléfono"
+                type="tel"
+                variant="outlined"
+                fullWidth
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Dirección"
+                variant="outlined"
+                fullWidth
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Tipo de Suministro"
+                variant="outlined"
+                fullWidth
+                name="supply"
+                value={formData.supply}
+                onChange={handleChange} 
+                required
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ mt: 2 }}
               >
                 REGISTRAR PROVEEDOR
               </Button>

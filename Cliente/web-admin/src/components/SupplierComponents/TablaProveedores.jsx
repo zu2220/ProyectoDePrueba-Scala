@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography'; 
 import { styled } from '@mui/material/styles'; 
 import { tableCellClasses } from '@mui/material/TableCell'; 
+import { IconButton } from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function TablaProveedores({ suppliers }) {
+export default function TablaProveedores({ suppliers, seleccionarProveedor, eliminarProveedor }) {
   return (
     <div style={{ padding: '20px', marginTop: '30px' }}> 
       <Typography variant="h5" component="h2" gutterBottom>
@@ -52,6 +54,7 @@ export default function TablaProveedores({ suppliers }) {
               <StyledTableCell align="left">Teléfono</StyledTableCell>
               <StyledTableCell align="left">Dirección</StyledTableCell>
               <StyledTableCell align="left">Suministro</StyledTableCell>
+              <StyledTableCell align="left">Acciones</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
@@ -73,6 +76,14 @@ export default function TablaProveedores({ suppliers }) {
                   <StyledTableCell align="left">{supplier.phone}</StyledTableCell>
                   <StyledTableCell align="left">{supplier.address || 'N/A'}</StyledTableCell>
                   <StyledTableCell align="left">{supplier.supply || 'N/A'}</StyledTableCell>
+                  <StyledTableCell align='left'>
+                    <IconButton color='primary' aria-label='edit' size='small' onClick={()=>seleccionarProveedor(supplier)}>
+                      <Edit fontSize='inherit'/>
+                    </IconButton>
+                    <IconButton color='secondary' aria-label='delete' size='small' onClick={()=>eliminarProveedor(supplier._id)}>
+                      <Delete fontSize='inherit'/>
+                    </IconButton>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))
             )}
