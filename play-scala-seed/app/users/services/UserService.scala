@@ -11,6 +11,10 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserService @Inject()(userRepository: UserRepository)(implicit ec: ExecutionContext) {
 
   def getUsers: Future[Seq[User]] = {
-    userRepository.getUsers()
+    userRepository.getUsers
+  }
+
+  def createUser(user: User): Future[Unit] = {
+    userRepository.createUser(user)
   }
 }

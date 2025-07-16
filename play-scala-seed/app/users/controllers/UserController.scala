@@ -22,6 +22,15 @@ class UserController @Inject()(val controllerComponents: ControllerComponents, u
       Ok(Json.toJson(users))
     }
   }
+
+  def createUser: Action[JsValue] = Action(parse.json) { request =>
+    request.body.validate[User].fold(
+      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid User format"))),
+      user => {
+        userService.createUser(user)
+      }
+    )
+  }
   /*
   def createUser: Action[JsValue] = Action(parse.json).async { request =>
     request.body.validate[User].fold(

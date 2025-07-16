@@ -3,8 +3,6 @@ package users.repositories
 import db.MongoConnection
 import org.mongodb.scala._
 import org.mongodb.scala.bson.ObjectId
-import play.api.libs.json.Json
-import play.api.mvc.Results.Created
 import users.models.User
 
 import javax.inject._
