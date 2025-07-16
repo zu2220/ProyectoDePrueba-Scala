@@ -3,37 +3,26 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.json._
+
 import scala.concurrent.{ExecutionContext, Future}
 import org.mongodb.scala._
-import models.User
 import db.MongoConnection
 import org.mongodb.scala.bson.ObjectId
 import org.mongodb.scala.model.Filters._
+import users.models.User
+import users.services.UserService
 
 @Singleton
-class UserController @Inject()(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
+class UserController @Inject()(val controllerComponents: ControllerComponents, userService: UserService)
+                              (implicit ec: ExecutionContext)
   extends BaseController {
 
-  val collection: MongoCollection[Document] = MongoConnection.database.getCollection("users")
-
   def getUsers: Action[AnyContent] = Action.async {
-    collection.find().toFuture().map { docs =>
-      val users = docs.map { doc =>
-        User(
-          doc.get("_id").map(_.asObjectId().getValue.toHexString),
-          doc.getString("nombre"),
-          doc.getString("apellido"),
-          doc.getString("nacimiento"),
-          doc.getString("correo"),
-          doc.getString("contrasena"),
-          doc.getString("celular"),
-          doc.getString("rol")
-        )
-      }
+    userService.getUsers.map{ users =>
       Ok(Json.toJson(users))
     }
   }
-
+  /*
   def createUser: Action[JsValue] = Action(parse.json).async { request =>
     request.body.validate[User].fold(
       errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid user format"))),
@@ -41,12 +30,12 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
         val doc = Document(
           "_id" -> new ObjectId(),
           "nombre" -> user.nombre,
-           "apellido" -> user.apellido,
-           "nacimiento" -> user.nacimiento,
-           "correo" -> user.correo,
-           "contrasena" -> user.contrasena,
-           "celular" -> user.celular,
-           "rol" -> user.rol
+          "apellido" -> user.apellido,
+          "nacimiento" -> user.nacimiento,
+          "correo" -> user.correo,
+          "contrasena" -> user.contrasena,
+          "celular" -> user.celular,
+          "rol" -> user.rol
         )
         collection.insertOne(doc).toFuture().map(result => {
           val userWithId = user.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
@@ -92,5 +81,5 @@ class UserController @Inject()(val controllerComponents: ControllerComponents)(i
         NotFound(Json.obj("error" -> "User not found"))
       }
     }
-}
+  }*/
 }

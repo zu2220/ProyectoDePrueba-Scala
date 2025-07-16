@@ -1,0 +1,8 @@
+# Ruta de los insumos
+GET     /supplies       controllers.SupplyController.getSupplies
++nocsrf
+POST    /supplies       controllers.SupplyController.createSupply
++nocsrf
+PUT     /supplies/:id   controllers.SupplyController.editSupply(id: String)
++nocsrf
+DELETE  /supplies/:id   controllers.SupplyController.deleteSupply(id: String)  

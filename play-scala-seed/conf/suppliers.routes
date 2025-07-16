@@ -1,0 +1,8 @@
+# Rutas para los proveedores
+GET     /suppliers        controllers.SupplierController.getSupplier
++nocsrf
+POST    /suppliers        controllers.SupplierController.createSupplier
++nocsrf
+PUT     /suppliers/:id    controllers.SupplierController.editSupplier(id: String)
++nocsrf
+DELETE  /suppliers/:id    controllers.SupplierController.deleteSupplier(id: String)
