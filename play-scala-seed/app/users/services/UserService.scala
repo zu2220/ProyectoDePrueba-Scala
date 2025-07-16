@@ -17,4 +17,8 @@ class UserService @Inject()(userRepository: UserRepository)(implicit ec: Executi
   def createUser(user: User): Future[Unit] = {
     userRepository.createUser(user)
   }
+
+  def editUser(user: User): Future[Unit] = {
+    userRepository.editUser(user)
+  }
 }

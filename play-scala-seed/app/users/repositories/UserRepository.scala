@@ -3,6 +3,7 @@ package users.repositories
 import db.MongoConnection
 import org.mongodb.scala._
 import org.mongodb.scala.bson.ObjectId
+import org.mongodb.scala.model.Filters.equal
 import users.models.User
 
 import javax.inject._
@@ -42,5 +43,21 @@ class UserRepository @Inject()(implicit ec: ExecutionContext) {
     )
 
     collection.insertOne(newUser).toFuture().map(_=>())
+  }
+
+  def editUser(user: User): Future[Unit] = {
+    val filter = equal("_id", user._id)
+    val update = Document(
+      "$set" -> Document(
+        "name" -> user.name,
+        "lastName" -> user.lastName,
+        "birthday" -> user.birthday,
+        "email" -> user.email,
+        "password" -> user.password,
+        "phone" -> user.phone,
+        "role" -> user.role
+      )
+    )
+    collection.updateOne(filter, update).toFuture().map{_=>()}
   }
 }
