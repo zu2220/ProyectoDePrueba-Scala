@@ -59,7 +59,7 @@ export function ProductProvider({children}){
 
     async function editProduct(product){
         try {
-            await updateProduct(product._id, product);
+            await updateProduct(product);
             await fetchProducts(true);
             return true;
         } catch (err) {

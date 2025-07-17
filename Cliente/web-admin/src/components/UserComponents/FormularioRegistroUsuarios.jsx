@@ -4,13 +4,13 @@ import { TextField, Button, Box, Grid, InputLabel, Select, MenuItem, FormControl
 const FormularioRegistroUsuarios = ({ agregarUsuario, usuarioSeleccionado, actualizarUsuario }) => {
 
   const emptyForm = {
-  nombre: '',
-  apellido: '',
-  nacimiento: '',
-  correo: '',
-  contrasena: '',
-  celular: '',
-  rol: '',
+  name: '',
+  lastName: '',
+  birthday: '',
+  email: '',
+  password: '',
+  phone: '',
+  role: '',
   };
 
   const [isEditingUser, setIsEditingUser] = useState(false);
@@ -21,13 +21,13 @@ useEffect(() => {
   if (usuarioSeleccionado) {
     setIsEditingUser(true);
     setFormData({
-      nombre: usuarioSeleccionado.nombre || '',
-      apellido: usuarioSeleccionado.apellido || '',
-      nacimiento: usuarioSeleccionado.nacimiento || '',
-      correo: usuarioSeleccionado.correo || '',
-      contrasena: usuarioSeleccionado.contrasena || '',
-      celular: usuarioSeleccionado.celular || '',
-      rol: usuarioSeleccionado.rol || '',
+      name: usuarioSeleccionado.name || '',
+      lastName: usuarioSeleccionado.lastName || '',
+      birthday: usuarioSeleccionado.birthday || '',
+      email: usuarioSeleccionado.email || '',
+      password: usuarioSeleccionado.password || '',
+      phone: usuarioSeleccionado.phone || '',
+      role: usuarioSeleccionado.role || '',
     });
   } else {
     setIsEditingUser(false);
@@ -45,18 +45,18 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { nombre, apellido, nacimiento, correo, contrasena, celular, rol } = formData;
-    if (nombre && apellido && nacimiento && correo && contrasena && celular && rol) {
+    const { name, lastName, birthday, email, password, phone, role } = formData;
+    if (name && lastName && birthday && email && password && phone && role) {
       if(usuarioSeleccionado){
         const usuarioActualizado = {
           "_id" : usuarioSeleccionado._id,
-          "nombre" : formData.nombre,
-          "apellido" : formData.apellido,
-          "nacimiento" : formData.nacimiento,
-          "correo" : formData.correo,
-          "contrasena" : formData.contrasena,
-          "celular" : formData.celular,
-          "rol" : formData.rol
+          "name" : formData.name,
+          "lastName" : formData.lastName,
+          "birthday" : formData.birthday,
+          "email" : formData.email,
+          "password" : formData.password,
+          "phone" : formData.phone,
+          "role" : formData.role
         };
         actualizarUsuario(usuarioActualizado);
       } else {
@@ -82,8 +82,8 @@ useEffect(() => {
                 label="Nombre"
                 variant="outlined"
                 fullWidth
-                name="nombre"
-                value={formData.nombre}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -94,8 +94,8 @@ useEffect(() => {
                 label="Apellido"
                 variant="outlined"
                 fullWidth
-                name="apellido"
-                value={formData.apellido}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -107,8 +107,8 @@ useEffect(() => {
                 type="date"
                 variant="outlined"
                 fullWidth
-                name="nacimiento"
-                value={formData.nacimiento}
+                name="birthday"
+                value={formData.birthday}
                 onChange={handleChange}
                 required
                 InputLabelProps={{ shrink: true }}
@@ -121,8 +121,8 @@ useEffect(() => {
                 type="email"
                 variant="outlined"
                 fullWidth
-                name="correo"
-                value={formData.correo}
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -134,8 +134,8 @@ useEffect(() => {
                 type="password"
                 variant="outlined"
                 fullWidth
-                name="contrasena"
-                value={formData.contrasena}
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -147,8 +147,8 @@ useEffect(() => {
                 type="tel"
                 variant="outlined"
                 fullWidth
-                name="celular"
-                value={formData.celular}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -156,15 +156,15 @@ useEffect(() => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth required margin="normal">
-                <InputLabel id="rol-label">Rol</InputLabel>
+                <InputLabel id="role-label">Rol</InputLabel>
                 <Select
-                  labelId="rol-label"
-                  value={formData.rol}
+                  labelId="role-label"
+                  value={formData.role}
                   onChange={handleChange}
                   label="Rol"
-                  name="rol"
+                  name="role"
                 >
-                  <MenuItem value=""><em>Seleccione un rol</em></MenuItem>
+                  <MenuItem value=""><em>Seleccione un role</em></MenuItem>
                   <MenuItem value="admin">Administrador</MenuItem>
                   <MenuItem value="user">Usuario</MenuItem>
                 </Select>
@@ -199,11 +199,11 @@ useEffect(() => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nombre"
+                label="Name"
                 variant="outlined"
                 fullWidth
-                name="nombre"
-                value={formData.nombre}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -214,8 +214,8 @@ useEffect(() => {
                 label="Apellido"
                 variant="outlined"
                 fullWidth
-                name="apellido"
-                value={formData.apellido}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -227,8 +227,8 @@ useEffect(() => {
                 type="date"
                 variant="outlined"
                 fullWidth
-                name="nacimiento"
-                value={formData.nacimiento}
+                name="birthday"
+                value={formData.birthday}
                 onChange={handleChange}
                 required
                 InputLabelProps={{ shrink: true }}
@@ -241,8 +241,8 @@ useEffect(() => {
                 type="email"
                 variant="outlined"
                 fullWidth
-                name="correo"
-                value={formData.correo}
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -254,8 +254,8 @@ useEffect(() => {
                 type="password"
                 variant="outlined"
                 fullWidth
-                name="contrasena"
-                value={formData.contrasena}
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -267,8 +267,8 @@ useEffect(() => {
                 type="tel"
                 variant="outlined"
                 fullWidth
-                name="celular"
-                value={formData.celular}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 required
                 margin="normal"
@@ -276,15 +276,15 @@ useEffect(() => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth required margin="normal">
-                <InputLabel id="rol-label">Rol</InputLabel>
+                <InputLabel id="role-label">Rol</InputLabel>
                 <Select
-                  labelId="rol-label"
-                  value={formData.rol}
+                  labelId="role-label"
+                  value={formData.role}
                   onChange={handleChange}
                   label="Rol"
-                  name="rol"
+                  name="role"
                 >
-                  <MenuItem value=""><em>Seleccione un rol</em></MenuItem>
+                  <MenuItem value=""><em>Seleccione un role</em></MenuItem>
                   <MenuItem value="admin">Administrador</MenuItem>
                   <MenuItem value="user">Usuario</MenuItem>
                 </Select>

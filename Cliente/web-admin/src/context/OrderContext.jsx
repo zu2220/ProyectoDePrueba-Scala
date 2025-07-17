@@ -32,7 +32,7 @@ export const OrderProvider = ({ children }) => {
     try {
       const data = await getOrders();
       
-      const processedData = data.map(order => {
+      const processedData = data.data.map(order => {
         let dateString = order.order_date;
 
         // Nos aseguramos de que total_amount sea un número
@@ -79,7 +79,7 @@ export const OrderProvider = ({ children }) => {
   const editOrder = async (updatedOrder)=>{
     setError(null);
     try {
-      await updateOrder(updatedOrder._id, updatedOrder);
+      await updateOrder(updatedOrder);
       await fetchOrders(true); 
       return true;
     } catch (err) {

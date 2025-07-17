@@ -58,15 +58,15 @@ export default function Tablausers({users, eliminarUsuario, seleccionarUsuario})
           <TableBody>
             {Array.isArray(users) && users.map((user, idx) => (
               <StyledTableRow key={user.id || idx}>
-                <StyledTableCell>{user.nombre}</StyledTableCell>
-                <StyledTableCell align="left">{user.apellido}</StyledTableCell>
+                <StyledTableCell>{user.name}</StyledTableCell>
+                <StyledTableCell align="left">{user.lastName}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {user.nacimiento ? new Date(user.nacimiento).toLocaleDateString('es-PE') : 'N/A'}
+                  {user.birthday ? new Date(user.birthday).toLocaleDateString('es-PE') : 'N/A'}
                 </StyledTableCell>
-                <StyledTableCell align="left">{user.correo}</StyledTableCell>
-                <StyledTableCell align="left">{user.contrasena}</StyledTableCell>
-                <StyledTableCell align="left">{user.celular}</StyledTableCell>
-                <StyledTableCell align="left">{user.rol}</StyledTableCell>
+                <StyledTableCell align="left">{user.email}</StyledTableCell>
+                <StyledTableCell align="left">{user.password}</StyledTableCell>
+                <StyledTableCell align="left">{user.phone}</StyledTableCell>
+                <StyledTableCell align="left">{user.role}</StyledTableCell>
                 <StyledTableCell align="left">
                   <IconButton  color="primary" aria-label="edit" size="small" onClick={() => seleccionarUsuario(user)}>
                     <Edit fontSize="inherit" />
