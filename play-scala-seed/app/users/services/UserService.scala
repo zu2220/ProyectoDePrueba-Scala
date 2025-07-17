@@ -1,10 +1,9 @@
 package users.services
 
 import users.models.User
-
-import javax.inject.{Inject, Singleton}
 import users.repositories.UserRepository
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -18,7 +17,11 @@ class UserService @Inject()(userRepository: UserRepository)(implicit ec: Executi
     userRepository.createUser(user)
   }
 
-  def editUser(user: User): Future[Unit] = {
+  def editUser(user: User): Future[Boolean] = {
     userRepository.editUser(user)
+  }
+
+  def deleteUser(id: String): Future[Boolean] = {
+    userRepository.deleteUser(id)
   }
 }

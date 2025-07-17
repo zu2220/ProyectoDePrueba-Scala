@@ -1,4 +1,4 @@
-package models
+package orders.models
 
 import play.api.libs.json._
 import java.util.Date

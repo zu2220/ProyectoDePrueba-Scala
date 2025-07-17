@@ -3,6 +3,6 @@ GET     /clients        controllers.ClientController.getClients
 +nocsrf
 POST    /clients        controllers.ClientController.createClient
 +nocsrf
-PUT     /clients/:id    controllers.ClientController.editClient(id: String)
+PUT     /clients        controllers.ClientController.editClient
 +nocsrf
 DELETE  /clients/:id    controllers.ClientController.deleteClient(id: String)

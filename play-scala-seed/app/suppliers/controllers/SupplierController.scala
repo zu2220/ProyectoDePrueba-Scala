@@ -1,91 +1,48 @@
-package controllers
+package suppliers.controllers
 
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.json._
 import scala.concurrent.{ExecutionContext, Future}
-import org.mongodb.scala._
-import models.Supplier
-import db.MongoConnection
-import org.mongodb.scala.bson.ObjectId
-import org.mongodb.scala.model.Filters._
+import suppliers.models.Supplier
+import suppliers.services.SupplierService
 
 @Singleton
-class SupplierController @Inject()(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
+class SupplierController @Inject()(val controllerComponents: ControllerComponents, supplierService: SupplierService)(implicit ec: ExecutionContext)
   extends BaseController {
-
-  val collection: MongoCollection[Document] = MongoConnection.database.getCollection("suppliers")
-
-  def getSupplier: Action[AnyContent] = Action.async {
-    collection.find().toFuture().map { docs =>
-      val suppliers = docs.map { doc =>
-        Supplier(
-          doc.get("_id").map(_.asObjectId().getValue.toHexString),
-          doc.getString("name"),
-          doc.getString("email"),
-          doc.getString("phone"),
-          doc.getString("address"),
-          doc.getString("supply")
-        )
-      }
-      Ok(Json.toJson(suppliers))
+  def getSuppliers: Action[AnyContent] = Action.async {
+    supplierService.getSuppliers.map{ Suppliers =>
+      Ok(Json.toJson(Suppliers))
     }
   }
 
-  def createSupplier: Action[JsValue] = Action(parse.json).async { request =>
+  def createSupplier: Action[JsValue] = Action.async(parse.json) { request =>
     request.body.validate[Supplier].fold(
-      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid supplier format"))),
-      supplier => {
-        val doc = Document(
-          "_id" -> new ObjectId(),
-          "name" -> supplier.name,
-          "email" -> supplier.email,
-          "phone" -> supplier.phone,
-          "address" -> supplier.address,
-          "supply" -> supplier.supply
-          )
-        collection.insertOne(doc).toFuture().map(result => {
-          val supplierWithId = supplier.copy(_id = doc.get("_id").map(_.asObjectId().getValue.toHexString))
-          Created(Json.toJson(supplier))
-        })
+      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid Supplier format"))),
+      Supplier => supplierService.createSupplier(Supplier).map(_=>Created(Json.toJson(Supplier)))
+    )
+  }
+
+  def editSupplier: Action[JsValue] = Action.async(parse.json) {request =>
+    request.body.validate[Supplier].fold(
+      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid Supplier format"))),
+      Supplier => supplierService.editSupplier(Supplier).map{result =>
+        if(result){
+          Ok(Json.obj("message" -> "Supplier updated successfully"))
+        } else {
+          NotFound(Json.obj("error" -> "Supplier wasn't found"))
+        }
       }
     )
   }
 
-  def editSupplier(id: String): Action[JsValue] = Action(parse.json).async {request =>
-    request.body.validate[Supplier].fold(
-      errors => Future.successful(BadRequest(Json.obj("error" -> "Invalid Supplier format"))),
-      supplier =>{
-        val filter = equal("_id", new ObjectId(id))
-        val update = Document(
-          "$set" -> Document(
-            "name" -> supplier.name,
-            "email" -> supplier.email,
-            "phone" -> supplier.phone,
-            "address" -> supplier.address,
-            "supply" -> supplier.supply
-          )
-        )
-        collection.updateOne(filter, update).toFuture.map(result=>{
-          if(result.getModifiedCount > 0){
-            Ok(Json.toJson(supplier))
-          } else{
-            NotFound(Json.obj("error" -> "The supplier wasn't found"))
-          }
-        })
-      }
-    )  
-  } 
-
   def deleteSupplier(id: String): Action[AnyContent] = Action.async {
-    val filter = equal("_id", new ObjectId(id))
-
-    collection.deleteOne(filter).toFuture.map(result =>{
-      if(result.getDeletedCount > 0){
-        Ok(Json.obj("message" -> "The supplier was deleted succesfully"))
-      } else{
-        NotFound(Json.obj("error" -> "The supplier wasn't found"))
+    supplierService.deleteSupplier(id).map{result=>
+      if(result){
+        Ok(Json.obj("message" -> "Supplier deleted successfully"))
+      } else {
+        NotFound(Json.obj("error" -> "Supplier wasn't found"))
       }
-    })
+    }
   }
 }

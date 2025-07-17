@@ -3,6 +3,6 @@ GET     /products        controllers.ProductController.getProducts
 +nocsrf
 POST    /products        controllers.ProductController.createProduct
 +nocsrf
-PUT     /products/:id    controllers.ProductController.editProduct(id: String)
+PUT     /products        controllers.ProductController.editProduct
 +nocsrf
 DELETE  /products/:id    controllers.ProductController.deleteProduct(id: String)

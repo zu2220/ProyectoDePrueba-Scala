@@ -5,5 +5,5 @@ GET     /users        controllers.UserController.getUsers
 POST    /users        controllers.UserController.createUser
 +nocsrf
 PUT     /users        controllers.UserController.editUser
-#+nocsrf
-#DELETE  /users/:id   controllers.UserController.deleteUser(id: String)
++nocsrf
+DELETE  /users/:id   controllers.UserController.deleteUser(id: String)

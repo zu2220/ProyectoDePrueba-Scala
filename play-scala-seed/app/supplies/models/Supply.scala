@@ -1,10 +1,9 @@
 // app/models/Supply.scala
-package models
+package supplies.models
 
 import play.api.libs.json._
 
 case class Supply(
-  //_id: Option[Int],
   _id: Option[String],
   name: String,
   calories: Double,

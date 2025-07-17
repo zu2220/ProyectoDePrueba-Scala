@@ -45,8 +45,8 @@ class UserRepository @Inject()(implicit ec: ExecutionContext) {
     collection.insertOne(newUser).toFuture().map(_=>())
   }
 
-  def editUser(user: User): Future[Unit] = {
-    val filter = equal("_id", user._id)
+  def editUser(user: User): Future[Boolean] = {
+    val filter = equal("_id", new ObjectId(user._id.get))
     val update = Document(
       "$set" -> Document(
         "name" -> user.name,
@@ -58,6 +58,23 @@ class UserRepository @Inject()(implicit ec: ExecutionContext) {
         "role" -> user.role
       )
     )
-    collection.updateOne(filter, update).toFuture().map{_=>()}
+    collection.updateOne(filter, update).toFuture().map{result =>
+      if(result.getModifiedCount > 0){
+        true
+      } else {
+        false
+      }
+    }
+  }
+
+  def deleteUser(id: String): Future[Boolean] = {
+    val filter = equal("_id", new ObjectId(id))
+    collection.deleteOne(filter).toFuture().map{result=>
+      if(result.getDeletedCount > 0) {
+        true
+      } else {
+        false
+      }
+    }
   }
 }
