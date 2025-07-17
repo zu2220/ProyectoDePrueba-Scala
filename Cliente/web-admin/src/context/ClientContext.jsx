@@ -59,7 +59,7 @@ export function ClientProvider({children}){
     async function editClient(client) {
         
         try {
-            await updateClient(client._id, client);
+            await updateClient(client);
             await fetchClients();
             return true;
 

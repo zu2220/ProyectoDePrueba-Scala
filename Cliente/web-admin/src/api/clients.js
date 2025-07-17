@@ -8,7 +8,7 @@ export const getClients = async () => axiosInstance.get("/clients");
 export const createClient = async (clientData) => axiosInstance.post("/clients", clientData);
 
 // Función para actualizar a un cliente
-export const updateClient = async (clientId, clientData) => axiosInstance.put(`/clients/${clientId}`, clientData);
+export const updateClient = async (clientData) => axiosInstance.put("/clients", clientData);
 
 // Función para eliminar a un cliente
 export const deleteClient = async (clientId) => axiosInstance.delete(`/clients/${clientId}`);

@@ -66,7 +66,7 @@ export function SupplierProvider({children}){
 
     async function editSupplier(supplier){
         try {
-            await updateSupplier(supplier._id, supplier);
+            await updateSupplier(supplier);
             await fetchSuppliers(true);
             return true;
 

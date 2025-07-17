@@ -1,0 +1,8 @@
+# Rutas para los clientes
+GET     /clients        controllers.ClientController.getClients
++nocsrf
+POST    /clients        controllers.ClientController.createClient
++nocsrf
+PUT     /clients        controllers.ClientController.editClient
++nocsrf
+DELETE  /clients/:id    controllers.ClientController.deleteClient(id: String)

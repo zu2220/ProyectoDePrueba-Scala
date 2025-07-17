@@ -1,0 +1,8 @@
+# Rutas para los pedidos
+GET     /orders        controllers.OrderController.getOrders
++nocsrf
+POST    /orders        controllers.OrderController.createOrder
++nocsrf
+PUT    /orders         controllers.OrderController.editOrder
++nocsrf
+DELETE /orders/:id     controllers.OrderController.deleteOrder(id: String)

@@ -1,0 +1,8 @@
+# Rutas para los productos
+GET     /products        controllers.ProductController.getProducts
++nocsrf
+POST    /products        controllers.ProductController.createProduct
++nocsrf
+PUT     /products        controllers.ProductController.editProduct
++nocsrf
+DELETE  /products/:id    controllers.ProductController.deleteProduct(id: String)

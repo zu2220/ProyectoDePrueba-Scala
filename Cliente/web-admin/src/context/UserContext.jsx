@@ -57,10 +57,10 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const editUser = async (userId, userData) => {
+  const editUser = async (userData) => {
     setError(null);
     try {
-      await updateUser(userId, userData);
+      await updateUser(userData);
       await fetchUsers(true);
       return true;
     } catch (err) {

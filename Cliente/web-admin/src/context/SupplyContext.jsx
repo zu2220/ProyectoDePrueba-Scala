@@ -57,7 +57,7 @@ export function SupplyProvider({children}){
 
     async function editSupply(supply) {
         try {
-            await updateSupply(supply._id, supply);
+            await updateSupply(supply);
             await fetchSupplies(true);
             return true;
 

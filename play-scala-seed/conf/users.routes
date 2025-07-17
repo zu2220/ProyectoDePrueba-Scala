@@ -1,0 +1,9 @@
+# Rutas para los usuarios
++nocsrf
+GET     /users        controllers.UserController.getUsers
++nocsrf
+POST    /users        controllers.UserController.createUser
++nocsrf
+PUT     /users        controllers.UserController.editUser
++nocsrf
+DELETE  /users/:id   controllers.UserController.deleteUser(id: String)

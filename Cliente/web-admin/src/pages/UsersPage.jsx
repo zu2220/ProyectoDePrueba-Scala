@@ -1,8 +1,7 @@
 import FormularioRegistroUsuarios from "../components/UserComponents/FormularioRegistroUsuarios.jsx";
 import SideBar from "../components/general/SideBar.jsx";
 import TablaUsuarios from "../components/UserComponents/TablaUsuarios.jsx";
-import { useState, useEffect } from "react";
-import {createUser, getUsers} from "../api/users.js";
+import { useState } from "react";
 import { useUsers } from "../context/UserContext.jsx";
 
 function UsersPage() {
@@ -19,7 +18,7 @@ const [selectedUser, setSelectedUser] = useState(null);
   }
 
   async function handleActualizarUsuario(usuarioActualizado) {
-    const success = await editUser(usuarioActualizado._id, usuarioActualizado);
+    const success = await editUser(usuarioActualizado);
     if (success) {
       alert("Usuario actualizado con éxito!");
     } else {
