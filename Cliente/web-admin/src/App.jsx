@@ -11,6 +11,7 @@ import CustomersPage from './pages/CustomersPage';
 import SuppliersPage from './pages/SuppliersPage';
 import SuppliesPage from './pages/SuppliesPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/general/ProtectedRoute';
 import { UserProvider } from './context/UserContext';
 import { ProductProvider } from './context/ProductContext';
@@ -30,6 +31,7 @@ function App() {
                   <Routes>
                     {/* Ruta pública */}
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
 
                     {/* Rutas protegidas */}
                     <Route path="/" element={
