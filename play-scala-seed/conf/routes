@@ -1,0 +1,7 @@
+# Archivo de rutas principal
+->  /api       users.Routes
+->  /api       suppliers.Routes
+->  /api       products.Routes
+->  /api       orders.Routes
+->  /api       clients.Routes
+->  /api       supplies.Routes  
